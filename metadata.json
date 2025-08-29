@@ -1,0 +1,5 @@
+{
+  "name": "Copy of Spaced Revision Tracker",
+  "description": "An elegant application to help you master any subject using the spaced repetition learning technique. Add topics you want to learn, and the app will automatically schedule your next revision session at scientifically proven intervals to maximize retention.",
+  "requestFramePermissions": []
+}
