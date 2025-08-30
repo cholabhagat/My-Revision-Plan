@@ -26,7 +26,7 @@ const App: React.FC = () => {
     if (itemsToKeep.length < items.length) {
       setItems(itemsToKeep);
     }
-  }, []); // Runs once on app load
+  }, [items, setItems]);
 
   const handleAddItem = useCallback((title: string, intervals: number[]) => {
     if (!title.trim() || intervals.length === 0) return;

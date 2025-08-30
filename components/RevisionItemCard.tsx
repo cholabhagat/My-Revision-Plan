@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RevisionItem } from '../types';
 import { REVISION_INTERVALS } from '../constants';
 import { getDaysUntil, formatDate, addDays } from '../utils/date';
-import { CalendarIcon, CheckIcon, TrashIcon, LevelUpIcon, BadgeCheckIcon, PencilIcon, ListBulletIcon, ArrowUturnLeftIcon } from './Icons';
+import { CalendarIcon, CheckIcon, TrashIcon, LevelUpIcon, BadgeCheckIcon, PencilIcon, ListBulletIcon, ArrowUturnLeftIcon, ArchiveBoxIcon } from './Icons';
 
 interface RevisionItemCardProps {
   item: RevisionItem;
@@ -168,8 +168,15 @@ const RevisionItemCard: React.FC<RevisionItemCardProps> = ({ item, onComplete, o
           </button>
         <button
           onClick={() => onArchive?.(item.id)}
-          className="p-2 text-slate-400 rounded-full hover:bg-slate-700 hover:text-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-red-500"
+          className="p-2 text-slate-400 rounded-full hover:bg-slate-700 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-amber-500"
           aria-label={`Archive ${item.title}`}
+        >
+          <ArchiveBoxIcon className="w-5 h-5" />
+        </button>
+        <button
+          onClick={() => onDeletePermanently?.(item.id)}
+          className="p-2 text-slate-400 rounded-full hover:bg-slate-700 hover:text-red-400 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-red-500"
+          aria-label={`Delete ${item.title} permanently`}
         >
           <TrashIcon className="w-5 h-5" />
         </button>

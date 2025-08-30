@@ -23,7 +23,8 @@ const ListSection: React.FC<{
   onComplete: (id: string) => void;
   onArchive: (id: string) => void;
   onUpdateTitle: (id: string, newTitle: string) => void;
-}> = ({ title, items, icon, onComplete, onArchive, onUpdateTitle }) => {
+  onDeletePermanently: (id: string) => void;
+}> = ({ title, items, icon, onComplete, onArchive, onUpdateTitle, onDeletePermanently }) => {
   if (items.length === 0) {
     return null;
   }
@@ -42,6 +43,7 @@ const ListSection: React.FC<{
             onComplete={onComplete} 
             onArchive={onArchive} 
             onUpdateTitle={onUpdateTitle}
+            onDeletePermanently={onDeletePermanently}
           />
         ))}
       </div>
@@ -107,6 +109,7 @@ const RevisionList: React.FC<RevisionListProps> = ({ items, archivedItems, compl
         onComplete={onComplete}
         onArchive={onArchive}
         onUpdateTitle={onUpdateTitle}
+        onDeletePermanently={onDeletePermanently}
       />
       <ListSection
         title="Due Today"
@@ -115,6 +118,7 @@ const RevisionList: React.FC<RevisionListProps> = ({ items, archivedItems, compl
         onComplete={onComplete}
         onArchive={onArchive}
         onUpdateTitle={onUpdateTitle}
+        onDeletePermanently={onDeletePermanently}
       />
       <ListSection
         title="Upcoming"
@@ -123,6 +127,7 @@ const RevisionList: React.FC<RevisionListProps> = ({ items, archivedItems, compl
         onComplete={onComplete}
         onArchive={onArchive}
         onUpdateTitle={onUpdateTitle}
+        onDeletePermanently={onDeletePermanently}
       />
 
       {(archivedItems.length > 0 || completedItems.length > 0) && (
