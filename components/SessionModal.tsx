@@ -14,7 +14,6 @@ interface SessionModalProps {
 
 const SessionModal: React.FC<SessionModalProps> = ({ mode, sessionItems, tag, onClose, onCompleteItem }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isRevealed, setIsRevealed] = useState(false);
 
     if (sessionItems.length === 0) {
         return (
@@ -34,7 +33,6 @@ const SessionModal: React.FC<SessionModalProps> = ({ mode, sessionItems, tag, on
     const goToNext = () => {
         if (currentIndex < sessionItems.length - 1) {
             setCurrentIndex(prev => prev + 1);
-            setIsRevealed(false);
         } else {
             onClose(); // End of session
         }
@@ -63,40 +61,31 @@ const SessionModal: React.FC<SessionModalProps> = ({ mode, sessionItems, tag, on
                 <div className="p-8 flex-grow flex flex-col justify-center items-center text-center">
                     <h3 className="text-3xl font-bold text-slate-100">{currentItem.title}</h3>
                     
-                    {isRevealed && (
-                        <div className="mt-6 p-4 bg-slate-900/50 rounded-lg w-full max-w-lg max-h-48 overflow-y-auto">
-                            {currentItem.notes ? (
-                                <p className="text-slate-300 whitespace-pre-wrap">{currentItem.notes}</p>
-                            ) : (
-                                <p className="text-slate-500 italic">No notes for this topic.</p>
-                            )}
-                        </div>
-                    )}
+                    <div className="mt-6 p-4 bg-slate-900/50 rounded-lg w-full max-w-lg max-h-48 overflow-y-auto">
+                        {currentItem.notes ? (
+                            <p className="text-slate-300 whitespace-pre-wrap">{currentItem.notes}</p>
+                        ) : (
+                            <p className="text-slate-500 italic">No notes for this topic.</p>
+                        )}
+                    </div>
                 </div>
 
                 <div className="p-6 border-t border-slate-700 bg-slate-800/50 rounded-b-lg">
-                    {isRevealed ? (
-                        mode === 'review' ? (
-                            <div className="flex justify-center items-center gap-4">
-                                <button onClick={() => handleConfidence('hard')} className="flex-1 font-semibold py-3 px-6 rounded-md bg-red-800 hover:bg-red-700 text-white transition-colors">Hard</button>
-                                <button onClick={() => handleConfidence('good')} className="flex-1 font-semibold py-3 px-6 rounded-md bg-sky-600 hover:bg-sky-500 text-white transition-colors">Good</button>
-                                <button onClick={() => handleConfidence('easy')} className="flex-1 font-semibold py-3 px-6 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white transition-colors">Easy</button>
-                            </div>
-                        ) : (
-                             <div className="flex justify-center items-center gap-4">
-                                {currentIndex > 0 && (
-                                    <button onClick={() => { setCurrentIndex(c => c-1); setIsRevealed(false); }} className="font-semibold py-3 px-6 rounded-md bg-slate-700 hover:bg-slate-600 text-white transition-colors">Previous</button>
-                                )}
-                                <button onClick={goToNext} className="flex-1 font-semibold py-3 px-6 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white transition-colors">
-                                    {currentIndex === sessionItems.length - 1 ? 'Finish' : 'Next'}
-                                </button>
-                            </div>
-                        )
+                    {mode === 'review' ? (
+                        <div className="flex justify-center items-center gap-4">
+                            <button onClick={() => handleConfidence('hard')} className="flex-1 font-semibold py-3 px-6 rounded-md bg-red-800 hover:bg-red-700 text-white transition-colors">Hard</button>
+                            <button onClick={() => handleConfidence('good')} className="flex-1 font-semibold py-3 px-6 rounded-md bg-sky-600 hover:bg-sky-500 text-white transition-colors">Good</button>
+                            <button onClick={() => handleConfidence('easy')} className="flex-1 font-semibold py-3 px-6 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white transition-colors">Easy</button>
+                        </div>
                     ) : (
-                        <button onClick={() => setIsRevealed(true)} className="w-full flex items-center justify-center gap-2 font-semibold py-3 px-6 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white transition-colors">
-                            <DocumentTextIcon className="w-5 h-5"/>
-                            Reveal Notes
-                        </button>
+                         <div className="flex justify-center items-center gap-4">
+                            {currentIndex > 0 && (
+                                <button onClick={() => { setCurrentIndex(c => c-1); }} className="font-semibold py-3 px-6 rounded-md bg-slate-700 hover:bg-slate-600 text-white transition-colors">Previous</button>
+                            )}
+                            <button onClick={goToNext} className="flex-1 font-semibold py-3 px-6 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white transition-colors">
+                                {currentIndex === sessionItems.length - 1 ? 'Finish' : 'Next'}
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>

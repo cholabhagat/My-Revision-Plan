@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { RevisionItem } from '../types';
 import { getDaysUntil, formatDate, addDays } from '../utils/date';
-import { CalendarIcon, CheckIcon, TrashIcon, LevelUpIcon, BadgeCheckIcon, PencilIcon, ArrowUturnLeftIcon, DocumentTextIcon, TagIcon, ClockIcon, LinkIcon, XMarkIcon, LockClosedIcon, PlusCircleIcon, SitemapIcon, EllipsisVerticalIcon, ChevronRightIcon } from './components/Icons';
+import { CalendarIcon, CheckIcon, TrashIcon, LevelUpIcon, BadgeCheckIcon, PencilIcon, ArrowUturnLeftIcon, DocumentTextIcon, TagIcon, ClockIcon, LinkIcon, XMarkIcon, LockClosedIcon, PlusCircleIcon, SitemapIcon, EllipsisVerticalIcon, ChevronRightIcon } from './Icons';
 
 type Confidence = 'hard' | 'good' | 'easy';
 

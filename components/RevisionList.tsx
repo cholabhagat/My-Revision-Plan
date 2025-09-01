@@ -1,4 +1,5 @@
 
+
 import React, { useMemo, useState } from 'react';
 import { RevisionItem } from '../types';
 import RevisionItemCard from './RevisionItemCard';
@@ -91,18 +92,18 @@ const TagFilter: React.FC<{
     );
 };
 
-const ListSection: React.FC<{
-  title: string;
-  items: RevisionItem[];
-  icon: React.ReactNode;
-  isLocked: (item: RevisionItem, allItems: RevisionItem[]) => boolean;
-  // All other RevisionItemCard props
-  [key: string]: any;
-}> = ({ title, items, icon, ...props }) => {
+// FIX: Properly type ListSectionProps to ensure props are passed down correctly.
+type ListSectionProps = Omit<RevisionListProps, 'items'> & {
+    title: string;
+    items: RevisionItem[];
+    icon: React.ReactNode;
+};
+
+const ListSection: React.FC<ListSectionProps> = ({ title, items, icon, ...props }) => {
   if (items.length === 0) {
     return null;
   }
-  // FIX: Destructure isLocked out of props to avoid conflict when spreading on RevisionItemCard.
+  // Destructure isLocked out of props to avoid conflict when spreading on RevisionItemCard.
   const { isLocked, ...cardProps } = props;
   return (
     <section className="mb-8">
@@ -112,11 +113,16 @@ const ListSection: React.FC<{
       </h2>
       <div className="space-y-4">
         {items.map(item => (
+          // Fix: provide default props for tree view when in a flat list
           <RevisionItemCard 
             key={item.id} 
             item={item} 
             isLocked={isLocked(item, cardProps.allItems)}
             {...cardProps}
+            childCount={0}
+            isExpanded={false}
+            onToggleExpand={() => {}}
+            indentationLevel={0}
           />
         ))}
       </div>
@@ -299,7 +305,18 @@ const RevisionList: React.FC<RevisionListProps> = (props) => {
                     {showCompleted && (
                         <section className="mt-4 space-y-4">
                             {[...completedItems].sort((a,b) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime()).map(item => (
-                                <RevisionItemCard key={item.id} item={item} isLocked={false} {...cardProps} onDeletePermanently={props.onDeletePermanently} />
+                                // Fix: Provide default props for tree view for completed items list.
+                                <RevisionItemCard 
+                                    key={item.id} 
+                                    item={item} 
+                                    isLocked={false} 
+                                    {...cardProps} 
+                                    onDeletePermanently={props.onDeletePermanently} 
+                                    childCount={0}
+                                    isExpanded={false}
+                                    onToggleExpand={() => {}}
+                                    indentationLevel={0}
+                                />
                             ))}
                         </section>
                     )}
@@ -313,7 +330,19 @@ const RevisionList: React.FC<RevisionListProps> = (props) => {
                     {showArchived && (
                         <section className="mt-4 space-y-4">
                             {[...archivedItems].sort((a,b) => new Date(b.archivedAt!).getTime() - new Date(a.archivedAt!).getTime()).map(item => (
-                                <RevisionItemCard key={item.id} item={item} isLocked={false} {...cardProps} onRestore={props.onRestore} onDeletePermanently={props.onDeletePermanently}/>
+                                // Fix: Provide default props for tree view for archived items list.
+                                <RevisionItemCard 
+                                    key={item.id} 
+                                    item={item} 
+                                    isLocked={false} 
+                                    {...cardProps} 
+                                    onRestore={props.onRestore} 
+                                    onDeletePermanently={props.onDeletePermanently}
+                                    childCount={0}
+                                    isExpanded={false}
+                                    onToggleExpand={() => {}}
+                                    indentationLevel={0}
+                                />
                             ))}
                         </section>
                     )}
