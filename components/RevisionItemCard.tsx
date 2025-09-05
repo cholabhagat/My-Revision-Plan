@@ -15,7 +15,7 @@ interface RevisionItemCardProps {
   onDeletePermanently?: (id: string) => void;
   selectionMode?: boolean;
   isSelected?: boolean;
-  onToggleSelect?: (id: string) => void;
+  onToggleSelectItem?: (id: string) => void;
   onNoteLinkClick?: (title: string) => void;
   isValidTopicTitle?: (title: string) => boolean;
   isLocked: boolean;
@@ -55,7 +55,7 @@ const parseNotes = (notes: string, isValidTopic: (title: string) => boolean, onC
 const RevisionItemCard: React.FC<RevisionItemCardProps> = (props) => {
   const { 
   item, allItems, onComplete, onUpdateItem, onArchive, onRestore, onDeletePermanently,
-  selectionMode, isSelected, onToggleSelect, onNoteLinkClick = () => {}, isValidTopicTitle = () => false,
+  selectionMode, isSelected, onToggleSelectItem, onNoteLinkClick = () => {}, isValidTopicTitle = () => false,
   isLocked, onAddSubtopic, onEditPrereqs, childCount, isExpanded, onToggleExpand, indentationLevel
 } = props;
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -263,7 +263,7 @@ const RevisionItemCard: React.FC<RevisionItemCardProps> = (props) => {
           <input
             type="checkbox"
             checked={!!isSelected}
-            onChange={() => onToggleSelect?.(item.id)}
+            onChange={() => onToggleSelectItem?.(item.id)}
             className="h-6 w-6 rounded border-slate-500 text-indigo-600 bg-slate-800 focus:ring-indigo-500 cursor-pointer"
           />
         </div>
